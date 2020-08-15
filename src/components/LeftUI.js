@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -34,17 +34,17 @@ export default function LeftSide(props) {
     try {
       const epochObject = await client._get(url);
       setEpochSeconds(epochObject.data.epoch.properties.epochseconds);
-      console.log(epochSeconds)
+      console.log(epochSeconds);
       setLeftStage("ready");
     } catch (e) {
-      window.alert("Cannot get time request");
+      window.alert("Cannot get Epoch time");
     }
   };
 
   useEffect(() => {
     getMiddleware();
-    setInterval(async () => {
-      await getMiddleware();
+    setInterval(() => {
+      getMiddleware();
     }, 30000);
   }, []);
 
@@ -54,20 +54,17 @@ export default function LeftSide(props) {
     const difference = localTime - epochSeconds;
     var formattedNumber = ("0" + difference).slice(-2);
     const timeD = `00:00:${formattedNumber}`;
-    console.log(timeD);
-    if (typeof timeD === "undefined") {
-      setLocalSeconds("00:00:00");
-    } else {
-      setLocalSeconds(timeD);
-    }
+    setLocalSeconds(timeD);
   };
 
   let interval;
+  const intervalRef = useRef();
 
   useEffect(() => {
     interval = setInterval(() => {
       eDifference();
     }, 1000);
+    intervalRef.current = interval;
     return () => clearInterval(interval);
   }, [eDifference]);
 
@@ -75,19 +72,19 @@ export default function LeftSide(props) {
     <div className={classes.root}>
       <Container component="main">
         <Grid container>
-            <ListItem>
-              <ListItemText
-                classes={{ root: classes.name }}
-                primary={`Epoch Seconds: ${epochSeconds}`}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                classes={{ root: classes.name }}
-                primary={`Difference In Time : ${localSeconds}`}
-              />
-            </ListItem>
-          </Grid>
+          <ListItem>
+            <ListItemText
+              classes={{ root: classes.name }}
+              primary={`Epoch Seconds: ${epochSeconds}`}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              classes={{ root: classes.name }}
+              primary={`Difference In Time : ${localSeconds}`}
+            />
+          </ListItem>
+        </Grid>
       </Container>
     </div>
   );

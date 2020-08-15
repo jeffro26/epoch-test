@@ -41,8 +41,8 @@ export default function RightSide(props) {
 
   useEffect(() => {
     getMiddleware();
-    setInterval(async () => {
-      await getMiddleware();
+    setInterval(() => {
+      getMiddleware();
     }, 30000);
   }, []);
 
