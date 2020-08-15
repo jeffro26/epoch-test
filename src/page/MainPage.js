@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
@@ -24,35 +24,6 @@ export default function MainPage() {
 
 
   const classes = useStyles();
-
-  // const getMiddleware = async () => {
-  //   const url1 = "/time";
-  //   const url2 = "/metrics";
-  //   setLeftStage("loading");
-  //   setRightStage("loading");
-  //   try {
-  //     const epochObject = await client._get(url1);
-  //     setEpochSeconds(epochObject.data.epoch.properties.epochseconds);
-  //     console.log(epochSeconds)
-  //     setLeftStage("ready");
-  //   } catch (e) {
-  //     window.alert("Cannot get requests");
-  //   }
-  //   try {
-  //     const metricsObject = await client._get(url2);
-  //     setMetrics(metricsObject);
-  //     setRightStage("ready");
-  //   } catch (e) {
-  //     window.alert("Cannot get requests");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getMiddleware();
-  //   setInterval(async () => {
-  //     await getMiddleware();
-  //   }, 30000);
-  // }, []);
 
   return (
     <div className={classes.root}>
